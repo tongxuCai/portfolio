@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{> base/head }}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+    <!-- Your CSS files -->
+    <link rel="stylesheet" href="styles/style.css">
+    
+    <!-- google fonts: Open Sans (sans) and Lora ) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700&display=swap" rel="stylesheet">
+      
+    <title>Lede page</title>
+  </head>
+  <body class="light-theme"> <!-- all of the content on your html page goes inside the body -->
+    <div class="container">
+     {{> base/navbar }}
+     {{> base/headline }}
+    </div>
+    
+    <div class="header">
+      <h1 class="headline">China's government financial investments expand overseas fast, big and unnoticed.</h1>
+      <h2 class="subhead">China is undoubtedly occupying the headlines of all major headlines today. However, it is still beyond the common knowledge about the scale of China's international financial deployement. In this project, the readers could learn a detailed breakdown of these projects time and geographic wise.</h2>
+      <p class="byline">By Frida Cai</p>
+      <p class="date">Published August 8, 2019</p>
+    </div>
+
+    <div class="story-body">
+      <p class="body-text">Chinese government does not participate in any public recording of its global financial activities. So far, the dataset published by AidData in 2018 is the most comprehensive source of Chinese official projects overseas.</p>
+      <p class="body-text">The projects are categorized under Official Development Assistance (ODA, commonly known as Aid), Other Official Flows (OOF that is primarily for commercial or representative intentions) and Vague Official Finance (Vague OF).</p>
+
+    <div class="chart-section">
+      <p class="chart-title">Chinese overseas financial activities in 2000 and 2014</p>
+        <div class="chart-row">
+          <img src="images/all2000.png" style='zoom:60%'/></div>
+        <div class="chart-row">
+          <img src="images/all2014.png" style='zoom:60%'/></div>
+      <p class="chart-source">Sources: https://www.aiddata.org/data/geocoded-chinese-global-official-finance-dataset</p>
+    </div>
+
+      <div class="chart-section">
+        <p class='chart-subhead'>The following chart describes how financial flows, goods or services are transferred from the donor to recipient for a project. Flow types include Debt Forgiveness, Debt Rescheduling, Export Credits, Foreign Direct Investment, Freestanding Technical Assistance, Grant, Loan, Joint Venture with Recipient, Scholarships/Training in Donor Country, and Strategic/Supplier Credit.</p>
+        <div class="chart-row">
+            <img src="images/flow-year.png" style='zoom:30%'/> </div>
+      </div>
+
+      <div class="chart-section">
+        <p class="chart-title">Distribution of aid projects, non-aid projects and vague flows.</p>
+        <p class="chart-subhead">There are 4315 of aid projects, 1140 non-aid ones and 735 undetermined flows. </p>
+        <div class="chart-row">
+            <img src="images/flowclass.png" style='zoom:20%'/> </div>
+        <p class="chart-source">Sources: https://www.aiddata.org/data/geocoded-chinese-global-official-finance-dataset</p>
+      </div>
+
+
+    <div class="chart-row">
+      <img src="images/compareyear.png" style='zoom:35%; padding-bottom:180px'/> 
+      </div>
+
+    <div class='chart-section'>
+      <p class="chart-title"> Close-up look in Africa </p>
+      <p class="chart-subhead">Africa attractes the most number of projects. This graph shows the breakdown of sector types. </p>
+      <div class="chart-row">
+          <img src="images/africasector.png" style="zoom:20%"/>
+        </div>
+      <p class="chart-source">Source: https://www.aiddata.org/data/geocoded-chinese-global-official-finance-dataset</p>
+    </div>
+  </div>
+
+  </body>
+
+</html>
