@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     {{> base/head }}
-    <!-- Required meta tags -->
+      {{> base/meta}}
+  {{> base/fonts }}
+  {{> base/analytics }}
+    {{!-- <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       
@@ -13,13 +16,15 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700&display=swap" rel="stylesheet">
       
-    <title>Lede page</title>
+    <title>Lede page</title> --}}
   </head>
-  <body class="light-theme"> <!-- all of the content on your html page goes inside the body -->
+
+  
+  <body> <!-- all of the content on your html page goes inside the body -->
     <div class="container">
      {{> base/navbar }}
      {{> base/headline }}
-    </div>
+    
     
     <div class="header">
       <h1 class="headline">China's government financial investments expand overseas fast, big and unnoticed.</h1>
@@ -68,6 +73,7 @@
         </div>
       <p class="chart-source">Source: https://www.aiddata.org/data/geocoded-chinese-global-official-finance-dataset</p>
     </div>
+  </div>
   </div>
 
   </body>

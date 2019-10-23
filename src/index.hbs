@@ -2,12 +2,14 @@
 <html lang='en'>
 <head>
   {{> base/head }}
-  <link rel="stylesheet" href="styles/style.css">
+  {{!-- <link rel="stylesheet" href="styles/style.css"> --}}
   {{> base/meta}}
   {{> base/fonts }}
   {{> base/analytics }}
 </head>
+
 <body>
+<div class="container">
   <!-- The headline area pulls most of its content from data/meta.json -->
   {{>base/navbar}}
   {{> base/headline }}
@@ -49,7 +51,7 @@
 
     </div>
 
-    {{> base/footer }}
+    {{!-- {{> base/footer }} --}}
   </main>
 
   <!-- We'll always keep this JS file around -->
