@@ -1,9 +1,9 @@
 ;(function() {
-  var margin = { top: 50, right: 75, bottom: 75, left: 50 }
-  var width = 400 - margin.left - margin.right
-  var height = 500 - margin.top - margin.bottom
+  let margin = { top: 50, right: 75, bottom: 75, left: 50 }
+  let width = 400 - margin.left - margin.right
+  let height = 500 - margin.top - margin.bottom
 
-  var svg = d3
+  let svg = d3
     .select('#chart13')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -25,20 +25,20 @@
     ])
     .range([0, 350])
     .paddingInner(0.01)
-  var widthScale = d3
+  let widthScale = d3
     .scaleLinear()
     .domain([0, 10])
     .range([0, 300])
-  var xPositionScale = d3
+  let xPositionScale = d3
     .scaleLinear()
     .domain([0, 10])
     .range([0, width])
-  var colorScale = d3
+  let colorScale = d3
     .scaleOrdinal()
     .domain(['cat', 'dog', 'cow'])
     .range(['orange', 'green', 'purple'])
 
-  d3.csv('eating-data.csv')
+  d3.csv(require('../../data/eating-data.csv'))
     .then(ready)
     .catch(function(err) {
       console.log('Failed with', err)
@@ -56,13 +56,13 @@
       .attr('y', d => bandScale(d.name))
       .attr('opacity', 0.75)
 
-    var yAxis = d3.axisLeft(bandScale)
+    let yAxis = d3.axisLeft(bandScale)
     svg
       .append('g')
       .attr('class', 'axis y-axis')
       .call(yAxis)
 
-    var xAxis = d3.axisBottom(xPositionScale)
+    let xAxis = d3.axisBottom(xPositionScale)
     svg
       .append('g')
       .attr('class', 'axis x-axis')

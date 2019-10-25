@@ -28,7 +28,7 @@ const yPositionScale = d3
 const colorScale = d3
   .scaleOrdinal()
   .domain(['Asia', 'Europe', 'Africa', 'N.America', 'S.America'])
-  .range(['#b3e2cd', '#fdcdac', '#cbd5e8', '#f4cae4', '#e6f5c9'])
+  .range(['#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69'])
 
 d3.csv(require('../data/countries.csv')).then(ready)
 
@@ -48,7 +48,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'grey')
     svg
       .selectAll('.asia')
-      .attr('fill', 'pink')
+      .attr('fill', '#4cc1fc')
       .raise()
   })
 
@@ -57,7 +57,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'grey')
     svg
       .selectAll('.africa')
-      .attr('fill', 'yellow')
+      .attr('fill', '#4cc1fc')
       .attr('opacity', 0.95)
       .raise()
   })
@@ -67,7 +67,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'grey')
     svg
       .selectAll('.namerica')
-      .attr('fill', 'green')
+      .attr('fill', '#4cc1fc')
       .raise()
   })
 
@@ -77,9 +77,9 @@ function ready(datapoints) {
       .selectAll('rect')
       .attr('fill', function(d) {
         if (d.gdp_per_capita < '5000') {
-          return 'blue'
+          return '#4cc1fc'
         } else {
-          return 'lightgrey'
+          return 'grey'
         }
       })
       .raise()

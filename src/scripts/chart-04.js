@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 
-const margin = { top: 30, left: 30, right: 30, bottom: 30 }
+const margin = { top: 30, left: 50, right: 100, bottom: 30 }
 const height = 400 - margin.top - margin.bottom
 const width = 680 - margin.left - margin.right
 
@@ -41,7 +41,7 @@ function ready(datapoints) {
   const nested = d3
     .nest()
     .key(function(d) {
-      return d.COU
+      return d.Country
     })
     .entries(datapoints)
   console.log(nested)
@@ -54,7 +54,7 @@ function ready(datapoints) {
     .append('circle')
     .attr('r', 3)
     .attr('fill', function(d) {
-      if (d.key === 'FRA') {
+      if (d.key === 'France') {
         return 'blue'
       } else {
         return 'grey'
@@ -83,7 +83,7 @@ function ready(datapoints) {
     })
     .attr('font-size', 12)
     .attr('fill', function(d) {
-      if (d.key === 'FRA') {
+      if (d.key === 'France') {
         return 'blue'
       } else {
         return 'grey'
@@ -99,7 +99,7 @@ function ready(datapoints) {
     .enter()
     .append('path')
     .attr('stroke', function(d) {
-      if (d.key === 'FRA') {
+      if (d.key === 'France') {
         return 'blue'
       } else {
         return 'grey'

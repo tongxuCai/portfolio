@@ -1,116 +1,118 @@
 import * as d3 from 'd3'
-const margin = { top: 0, left: 0, right: 0, bottom: 0 }
-const height = 400 - margin.top - margin.bottom
-const width = 400 - margin.left - margin.right
-const svg = d3
+
+let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+
+let height = 400 - margin.top - margin.bottom
+
+let width = 780 - margin.left - margin.right
+
+let svg = d3
   .select('#chart-4')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
   .attr('width', width + margin.left + margin.right)
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-  .append('g')
-  .attr('transform', `translate(${width / 2},${height / 2})`)
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sept',
-  'Oct',
-  'Nov',
-  'Dec'
-]
+let radius = 150
 
-const angleScale = d3
-  .scaleBand()
-  .domain(months)
+let radiusScale = d3
+  .scaleLinear()
+  .domain([10, 90])
+  .range([40, radius])
+
+let angleScale = d3
+  .scalePoint()
+  .domain([
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
+    'Blah'
+  ])
   .range([0, Math.PI * 2])
 
-const radius = 150
-
-const radiusScale = d3
-  .scaleLinear()
-  .domain([0, 90])
-  .range([0, radius])
-const line = d3
+let line = d3
   .radialArea()
-  .angle(d => angleScale(d.month_name))
-  .innerRadius(d => radiusScale(+d.low_temp))
-  .outerRadius(d => radiusScale(+d.high_temp))
+  .outerRadius(function(d) {
+    return radiusScale(d.high_temp)
+  })
+  .innerRadius(function(d) {
+    return radiusScale(d.low_temp)
+  })
+  .angle(function(d) {
+    return angleScale(d.month_name)
+  })
+
+let colorScale = d3
+  .scaleLinear()
+  .domain([0, 100])
+  .range(['lightblue', 'pink'])
 
 d3.csv(require('/data/ny-temps.csv'))
   .then(ready)
-  .catch(err => console.log('Failed with', err))
+  .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
+  let container = svg
+    .append('g')
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+
   datapoints.push(datapoints[0])
 
-  svg
+  container
     .append('path')
     .datum(datapoints)
     .attr('d', line)
-    .attr('fill', 'orange')
-    .attr('stroke', 'none')
-    .attr('opacity', 0.75)
-  svg
-    .append('circle')
-    .attr('r', 3)
-    .attr('cx', 0)
-    .attr('cy', 0)
+    .attr('fill', 'lightblue')
 
-  const bands = [0, 30, 40, 50, 60, 70, 80, 90]
+  let circleBands = [20, 30, 40, 50, 60, 70, 80, 90]
+  let textBands = [30, 50, 70, 90]
 
-  svg
-    .selectAll('.band')
-    .data(bands)
+  container
+    .selectAll('.bands')
+    .data(circleBands)
     .enter()
     .append('circle')
     .attr('fill', 'none')
-    .attr('stroke', 'grey')
+    .attr('stroke', 'gray')
+    .attr('cx', 0)
+    .attr('cy', 0)
     .attr('r', function(d) {
-      console.log(d)
       return radiusScale(d)
     })
-    .lower()
 
-  svg
-    .selectAll('.label')
-    .data(bands)
-    .enter()
+  container
     .append('text')
-    .text(d => d)
-    .attr('y', d => -radiusScale(d))
     .attr('text-anchor', 'middle')
+    .text('NYC')
+    .attr('font-size', 30)
+    .attr('font-weight', 700)
     .attr('alignment-baseline', 'middle')
 
-  svg
+  container
+    .selectAll('.temp-notes')
+    .data(textBands)
+    .enter()
     .append('text')
-    .text('NYC')
     .attr('x', 0)
-    .attr('y', 8)
-    .attr('font-weight', 'bold')
+    .attr('y', function(d) {
+      return -1 * radiusScale(d)
+    })
+    .attr('dy', function(d) {
+      return -2
+    })
+    .text(function(d) {
+      return d + '°'
+    })
     .attr('text-anchor', 'middle')
-    .style('font-size', '30px')
-
-  // svg
-  //   .selectAll('.radius-line')
-  //   .data(angleScale.domain())
-  //   .enter()
-  //   .append('line')
-  //   .attr('x1', 0)
-  //   .attr('y1', 0)
-  //   .attr('x2', 0)
-  //   .attr('y2', -radius)
-  //   .attr('stroke', 'black')
-  //   .attr('transform', function(d) {
-  //     return `rotate(${(angleScale(d) * 180) / Math.PI})`
-  //   })
-
-  console.log('evertying in the angle scale'.angleScale.domain())
+    .attr('font-size', 8)
 }

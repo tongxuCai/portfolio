@@ -1,9 +1,12 @@
 import * as d3 from 'd3'
-const margin = { top: 0, left: 40, right: 40, bottom: 0 }
-const height = 250 - margin.top - margin.bottom
-const width = 1000 - margin.left - margin.right
 
-const svg = d3
+let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+
+let height = 400 - margin.top - margin.bottom
+
+let width = 780 - margin.left - margin.right
+
+let svg = d3
   .select('#chart-2')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -11,80 +14,64 @@ const svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-const pie = d3.pie().value(function(d) {
-  return d.minutes
-})
-const task = ['Typing code', 'Rewriting code', 'Reading StackOverflow']
-
-const radius = 75
-
-const angleScale = d3
-  .scaleBand()
-  .domain(task)
-  .range([0, Math.PI * 2])
-
-const xPositionScale = d3
+let colorScale = d3.scaleOrdinal().range(['#7fc97f', '#beaed4', '#fdc086'])
+let xPositionScale = d3
   .scalePoint()
+  .domain(['Project 1', 'Project 2', 'Project 3', 'Project 4'])
   .range([0, width])
-  .padding(0.2)
+  .padding(0.4)
 
-const labelArc = d3
+let arc = d3
   .arc()
-  .innerRadius(radius)
-  .outerRadius(radius)
-  .startAngle(d => angleScale(d))
-  .endAngle(d => angleScale(d) + angleScale.bandwidth())
+  .innerRadius(0)
+  .outerRadius(80)
 
-const colorScale = d3.scaleOrdinal().range(['pink', 'cyan', 'magenta'])
+let pie = d3
+  .pie()
+  .value(function(d) {
+    return d.minutes
+  })
+  .sort(function(d1, d2) {
+    return d1.task.localeCompare(d2.task)
+  })
 
 d3.csv(require('/data/time-breakdown-all.csv'))
   .then(ready)
-  .catch(err => console.log('Failed with', err))
+  .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  const nested = d3
+  let nested = d3
     .nest()
     .key(function(d) {
       return d.project
     })
     .entries(datapoints)
 
-  const projects = datapoints.map(d => d.project)
-  xPositionScale.domain(projects)
-
-  svg
-    .selectAll('.pie')
+  let charts = svg
+    .selectAll('g')
     .data(nested)
     .enter()
     .append('g')
     .attr('transform', function(d) {
-      const x = xPositionScale(d.key)
-      return 'translate (' + x + ',' + height / 2 + ')'
+      let xPos = xPositionScale(d.key)
+      return 'translate(' + xPos + ',' + height / 2 + ')'
     })
-    .each(function(d) {
-      const name = d.key
-      const datapoints = d.values
-      const container = d3.select(this)
 
-      const arc = d3
-        .arc()
-        .innerRadius(0)
-        .outerRadius(radius)
+  charts.each(function(d) {
+    d3.select(this)
+      .selectAll('path')
+      .data(pie(d.values))
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('fill', function(d) {
+        return colorScale(d.data.task)
+      })
 
-      container
-        .selectAll('path')
-        .data(pie(datapoints))
-        .enter()
-        .append('path')
-        .attr('d', d => arc(d))
-        .attr('fill', d => colorScale(d.data.task))
-        .attr('opacity', 0.5)
-
-      container
-        .append('text')
-        .text(name)
-        .attr('fill', 'black')
-        .attr('text-anchor', 'middle')
-        .attr('y', 100)
-    })
+    d3.select(this)
+      .append('text')
+      .attr('y', 120)
+      .text(d.key)
+      .attr('text-anchor', 'middle')
+  })
 }

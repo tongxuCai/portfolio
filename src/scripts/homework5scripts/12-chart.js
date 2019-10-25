@@ -1,11 +1,11 @@
 ;(function() {
   // Build your SVG here
-  var margin = { top: 50, right: 50, bottom: 50, left: 50 }
-  var padding = { top: '25%', bottom: '25%' }
-  var width = 400 - margin.left - margin.right
-  var height = 200 - margin.top - margin.bottom
+  const margin = { top: 50, right: 50, bottom: 50, left: 50 }
+  const padding = { top: '25%', bottom: '25%' }
+  const width = 400 - margin.left - margin.right
+  const height = 200 - margin.top - margin.bottom
 
-  var svg = d3
+  const svg = d3
     .select('#chart12')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -14,20 +14,20 @@
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
   // Build your scales here
-  var xPointScale = d3
+  const xPointScale = d3
     .scaleLinear()
     .domain([0, 10])
     .range([0, 280])
-  var colorScale = d3
+  const colorScale = d3
     .scaleOrdinal()
     .domain(['cat', 'dog', 'cow'])
     .range(['orange', 'green', 'purple'])
-  var radiusScale = d3
+  const radiusScale = d3
     .scaleSqrt()
     .domain([0, 10])
     .range([0, 50])
 
-  d3.csv('eating-data.csv')
+  d3.csv(require('../../data/eating-data.csv'))
     .then(ready)
     .catch(function(err) {
       console.log('Failed with', err)
@@ -46,7 +46,7 @@
       .attr('r', d => radiusScale(d.hotdogs))
       .attr('opacity', 0.25)
 
-    var xAxis = d3.axisBottom(xPointScale)
+    const xAxis = d3.axisBottom(xPointScale)
     svg
       .append('g')
       .attr('class', 'axis x-axis')

@@ -1,9 +1,9 @@
 ;(function() {
-  var margin = { top: 50, right: 50, bottom: 50, left: 50 }
-  var width = 500 - margin.left - margin.right
-  var height = 400 - margin.top - margin.bottom
+  const margin = { top: 50, right: 50, bottom: 50, left: 50 }
+  const width = 500 - margin.left - margin.right
+  const height = 400 - margin.top - margin.bottom
 
-  var svg = d3
+  const svg = d3
     .select('#chart14')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -11,15 +11,15 @@
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-  var yPositionScale = d3
+  const yPositionScale = d3
     .scaleLinear()
     .domain([0, 10])
     .range([0, height])
-  var colorScale = d3
+  const colorScale = d3
     .scaleOrdinal()
     .domain(['dog', 'cat', 'cow'])
     .range(['green', 'purple', 'orange'])
-  var xPositionScale = d3
+  const xPositionScale = d3
     .scaleBand()
     .domain([
       'Hio',
@@ -32,7 +32,7 @@
     ])
     .range([0, width])
 
-  d3.csv('eating-data.csv')
+  d3.csv(require('../../data/eating-data.csv'))
     .then(ready)
     .catch(function(err) {
       console.log('Failed with', err)
@@ -59,12 +59,12 @@
         return colorScale(d.animal)
       })
 
-    var yAxis = d3.axisLeft(yPositionScale)
+    const yAxis = d3.axisLeft(yPositionScale)
     svg
       .append('g')
       .attr('class', 'axis y-axis')
       .call(yAxis)
-    var xAxis = d3.axisBottom(xPositionScale)
+    const xAxis = d3.axisBottom(xPositionScale)
     svg
       .append('g')
       .attr('class', 'axis x-axis')

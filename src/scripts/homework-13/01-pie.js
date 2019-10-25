@@ -1,64 +1,71 @@
 import * as d3 from 'd3'
 
-const margin = { top: 0, left: 0, right: 0, bottom: 0 }
-const height = 400 - margin.top - margin.bottom
-const width = 400 - margin.left - margin.right
+let margin = { top: 30, left: 30, right: 30, bottom: 30 }
 
-const svg = d3
+let height = 400 - margin.top - margin.bottom
+
+let width = 780 - margin.left - margin.right
+
+let svg = d3
   .select('#chart-1')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
   .attr('width', width + margin.left + margin.right)
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-  .attr('transform', `translate(${width / 2},${height / 2})`)
 
-const pie = d3.pie().value(function(d) {
+let colorScale = d3.scaleOrdinal().range(['#7fc97f', '#beaed4', '#fdc086'])
+
+let arc = d3
+  .arc()
+  .innerRadius(0)
+  .outerRadius(150)
+
+let labelArc = d3
+  .arc()
+  .innerRadius(160)
+  .outerRadius(160)
+
+let pie = d3.pie().value(function(d) {
   return d.minutes
 })
 
-const radius = 100
-
-const arc = d3
-  .arc()
-  .innerRadius(0)
-  .outerRadius(radius)
-
-const labelArc = d3
-  .arc()
-  .innerRadius(radius)
-  .outerRadius(radius)
-  .startAngle(d => pie(d.minutes))
-  .endAngle(d => pie(d.minutes) + arc.bandwidth())
-
-const colorScale = d3.scaleOrdinal().range(['pink', 'cyan', 'magenta'])
-
 d3.csv(require('/data/time-breakdown.csv'))
   .then(ready)
-  .catch(err => console.log('Failed with', err))
+  .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  console.log(pie(datapoints))
-  svg
+  let pieContainer = svg
+    .append('g')
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+
+  pieContainer
     .selectAll('path')
     .data(pie(datapoints))
     .enter()
     .append('path')
-    .attr('d', d => arc(d))
-    .attr('fill', d => colorScale(d.data.task))
-    .attr('opacity', 0.5)
+    .attr('d', arc)
+    .attr('fill', function(d) {
+      return colorScale(d.data.task)
+    })
 
-  svg
-    .selectAll('.outside-label')
+  pieContainer
+    .selectAll('text')
     .data(pie(datapoints))
     .enter()
     .append('text')
-    .text(d => d.data.task)
-    .attr('fill', 'black')
-    .attr('text-anchor', 'middle')
-    .attr('alignment-baseline', 'middle')
+    .attr('d', labelArc)
     .attr('transform', function(d) {
-      // console.log("here's the label:", labelArc(d))
-      return `translate(${arc.centroid(d)})`
+      return 'translate(' + labelArc.centroid(d) + ')'
+    })
+    .text(function(d) {
+      return d.data.task
+    })
+    .attr('text-anchor', function(d) {
+      if (d.startAngle > Math.PI) {
+        return 'end'
+      } else {
+        return 'start'
+      }
     })
 }

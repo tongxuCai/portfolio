@@ -26,7 +26,7 @@ const yPositionScale = d3
 
 const colorScale = d3
   .scaleOrdinal()
-  .range(['purple', 'orange', 'green', 'pink', 'blue'])
+  .range(['#7fc97f', '#beaed4', '#fdc086', '#ffff99', '#386cb0', '#f0027f'])
 
 // Create a d3.line function
 const line = d3
@@ -72,6 +72,7 @@ function ready(datapoints) {
     .append('path')
     .attr('fill', 'none')
     .attr('stroke', d => colorScale(d.key))
+    .attr('stroke-width', 2)
     .attr('d', function(d) {
       console.log('this nested thing is', d)
       // Takes all of the datapoints in that
@@ -87,10 +88,12 @@ function ready(datapoints) {
     .attr('class', 'axis x-axis')
     .attr('transform', 'translate(0,' + height + ')')
     .call(xAxis)
+    .lower()
 
   const yAxis = d3.axisLeft(yPositionScale)
   svg
     .append('g')
     .attr('class', 'axis y-axis')
     .call(yAxis)
+    .lower()
 }
