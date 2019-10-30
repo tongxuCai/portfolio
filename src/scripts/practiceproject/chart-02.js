@@ -71,7 +71,7 @@ function ready(datapoints) {
         return 'red'
       })
     // .on('mouseover', d => {
-    //     const symbol = d.key
+    //   const symbol = d.key
     //   svg
     //     .selectAll('path.' + symbol)
     //     .attr('stroke', 'red')
@@ -86,7 +86,7 @@ function ready(datapoints) {
     //     .raise()
     // })
     // .on('mouseout', d => {
-    //     const symbol = d.key
+    //   const symbol = d.key
     //   svg.selectAll('path.' + symbol).attr('stroke', colorScale(d.key))
     //   svg.selectAll('circle.' + symbol).attr('fill', colorScale(d.key))
     //   svg.selectAll('text.' + symbol).attr('fill', 'black')
