@@ -8,7 +8,10 @@ Most datasets are assigned by instructor, primarily to practice d3 skills. The o
 
 # Methodology / Code / Findings
 
-With the templating system Sawhorse, I set up new projects, generate my mainpage, and add the handlebars of each projects' to the page. 
+With the templating system Sawhorse, I set up new projects, generate my mainpage, and add the handlebars of each projects' to the page.
+
+# Analysis notebook 
+With much help from the instructor, TAs and fellow classmates, I am now capable of visualizing both local datasets and ones that require server-running. First, I generate a new sawhorse project, create an SVG, read in data, and add whatever feasible visualizations with functions to present the data. If multiple SVGs are needed, I draw containers. So far, I have created static d3 charts, interactive (clickable) ones, responsive ai2html images and scrollytelling pieces. 
 
 # Questions / Feedback
 
