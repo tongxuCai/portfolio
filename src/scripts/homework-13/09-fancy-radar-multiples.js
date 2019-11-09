@@ -5,7 +5,7 @@ const margin = { top: 0, left: 0, right: 0, bottom: 0 }
 const height = 410 - margin.top - margin.bottom
 const width = 350 - margin.left - margin.right
 
-let container = d3.select('#chart-9')
+const container = d3.select('#chart-9')
 
 const angleScale = d3.scaleBand().range([0, Math.PI * 2])
 
@@ -79,7 +79,7 @@ function ready(datapoints) {
       const categories = customDatapoints.map(d => d.name)
       angleScale.domain(categories)
 
-      let bands = [0.2, 0.4, 0.6, 0.8, 1]
+      const bands = [0.2, 0.4, 0.6, 0.8, 1]
 
       holder
         .selectAll('.band-circle')

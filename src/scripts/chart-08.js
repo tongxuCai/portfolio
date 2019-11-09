@@ -20,7 +20,7 @@ const area = d3
   .y1(d => yPositionScale(d.value))
   .y0(height)
 
-d3.csv(require('../data/climate-data.tsv'))
+d3.tsv(require('../data/climate-data.tsv'))
   .then(ready)
   .catch(err => {
     console.log('Failed with', err)

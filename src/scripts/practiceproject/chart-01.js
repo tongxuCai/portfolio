@@ -107,7 +107,7 @@ function ready(datapoints) {
       console.log('last point is', latest)
       return yPositionScale(latest.Closing)
     })
-    .attr('font-size', 7)
+    .attr('font-size', 12)
 
   // Draw your areas
   svg

@@ -34,97 +34,26 @@
     {{> base/navbar }}
     {{> base/headline }}
     <h1>Introduction to Scales, D3, and Everything Else</h1>
-
-    <p>Now that we've seen the basics of D3, let's see if we can put them to use. To complete each question, open up the appropriate <code>.js</code> file and edit it.</p>
-
-    <p>There are <strong>multiple hints</strong> for each question inside of the <code>hints/</code> directory. Each problem has an associated text file.</p>
-
-    <p><strong>When you run into trouble:</strong></p>
-
-    <ul>
-      <li><strong>FORCE REFRESH</strong> with shift+refresh</li>
-      <li>Make sure you've run the linter in your text editor</li>
-      <li>Check the console for error messages</li>
-      <li>If all else fails, teaching assistants and <code>#storytelling</code> can help!</li>
-    </ul>
-
-    <p>Make sure you're <strong>running a server</strong>, and looking at your page on localhost! You only need it for question 9 and on, but your console will be cluttered with errors otherwise.</p>
-
-    <h3>Baby-sized scale reference</h3>
-
-    <p>There are a lot of scales in D3, and of course <a href="https://github.com/d3/d3-scale">the documentation sucks</a> so this might be enough for now.</p>
-
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Scale</th>
-          <th>Inputs</th>
-          <th>Typical outputs</th>
-          <th>Example</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>scaleLinear()</code></td>
-          <td>Numbers</td>
-          <td>Numbers or color range</td>
-          <td>
-            Age of a pandas bear becomes length of a bar<br>
-            Higher pollution levels become a greener dot
-          </td>
-        </tr>
-        <tr>
-          <td><code>scaleBand()</code></td>
-          <td>Categories</td>
-          <td>Bar position/size</td>
-          <td>Spacing out bars based on names of senators</td>
-        </tr>
-        <tr>
-          <td><code>scaleOrdinal()</code></td>
-          <td>Categories</td>
-          <td>Colors (list of specific ones)</td>
-          <td>Republicans are red<br>Democrats are blue</td>
-        </tr>
-        <tr>
-          <td><code>scaleSqrt()</code></td>
-          <td>Numbers</td>
-          <td>Radius of circle</td>
-          <td>Age of a tree becomes size of a circle</td>
-        </tr>
-        <tr>
-          <td><code>scalePoint()</code></td>
-          <td>Categories</td>
-          <td>Evenly spaced out</td>
-          <td>It's like a <code>scaleBand</code>, but for spacing out points/circles instead of bars</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p>Remember, all scales want a <code>domain</code> and a <code>range</code>!</p>
-    <p class="text-right"><small>...except <code>scaleOrdinal</code>, but you aren't supposed to know that yet.</small></p>
+    <p>From chart 9, I run a <strong>server</strong>, otherwise my console will be cluttered with errors otherwise.</p>
 
     <h3>1. A couple scales</h3>
 
-    <p><strong>You need to fix some scales for me.</strong> I will eventually have several people of various heights, and will use a rectangle to represent each of them.</p>
+    <p>Present several people of various heights, and will use a rectangle to represent each of them.</p>
     <ul>
-      <li><code>widthScale</code>: people are between 0 and 200cm tall, and I would like my longest bar to be 400 pixels</li>
-      <li><code>colorScale</code>: I would like the gender of <code>man</code> to be <code>#BDB76B</code>, <code>woman</code> to be <code>#ADFF2F</code>.</li>
+      <li><code>widthScale</code>: people are between 0 and 200cm tall, and my longest bar at 400 pixels</li>
+      <li><code>colorScale</code>: <code>Man</code> to be <code>#BDB76B</code>, <code>woman</code> to be <code>#ADFF2F</code>.</li>
     </ul>
-
-    <p>Update the <code>domain</code> and <code>range</code> of the <code>widthScale</code> and <code>colorScale</code>.</p>
 
     <svg height="50" width="400" id="chart1">
       <rect x="0" y="15" height="20" fill="black"></rect>
     </svg>
 
     <h3>2. Working on some bars</h3>
-
-    <p>I have a few bars that stand for different countries in the world, but it needs some improvement.</p>
     <ul>
-      <li><strong>Using d3</strong>, change the SVG itself to be 400 pixels wide and 200 pixels tall</li>
-      <li>Every bar should be 50 pixels tall</li>
-      <li>Every bar's <code>width</code> should be related to the gdp of the country. If the gdp is 100, it should be as wide as the SVG.</li>
-      <li>Every bar's color should be related to the continent. Get your colors from <a href="http://colorbrewer2.org/">Colorbrewer</a>.</li>
+      <li><strong>Using d3</strong> to change the SVG to be 400 pixels wide and 200 pixels tall</li>
+      <li>Every bar is 50 pixels tall</li>
+      <li>Every bar's <code>width</code> is related to the gdp of the country. If the gdp is 100, it should be as wide as the SVG.</li>
+      <li>Every bar's color is related to the continent.</li>
     </li>
     <div>
       <svg id="chart2" height="400" width="400">
@@ -136,12 +65,10 @@
     </div>
 
     <h3>3. A circle chart</h3>
-
-    <p>I have a few circles that I need to space out and resize. I would like...</p>
     <ul>
-      <li>Every circle's <code>cy</code> to be the <strong>vertical center of the graph</strong></li>
-      <li>Each circle to be evenly spaced out on the x axis. This uses a <code>d3.scalePoint</code>, which we didn't talk about in class. Check the <code>hints/</code> folder.</li>
-      <li>Each circle's size to reflect the weight of the animal. If an animal were 1000 lb, it should have a radius of 50.</li>
+      <li>Every circle's <code>cy</code> is at the <strong>vertical center of the graph</strong></li>
+      <li>Each circle is evenly spaced out on the x axis.</li>
+      <li>Each circle's size reflects the weight of the animal. If an animal were 1000 lb, it has a radius of 50.</li>
     </ul>
 
     <div id="chart3">
@@ -157,10 +84,7 @@
 
     <h3>4. A fake, ugly scatterplot</h3>
 
-    <p>Build me a graph! I didn't give you any circles to start with, though, so how are you going to add new ones? Check out <code>hints/</code></p>
-
-    <p>And be sure that <strong>yours match mine</strong>, y position is going to be tricky</p>
-
+    <p>Add new circles</p>
     <ul>
       <li><strong>Mark:</strong> circle</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual representation:</strong> x axis </li>
@@ -173,9 +97,6 @@
     </div>
 
     <h3>5. A fake, ugly bubble chart</h3>
-
-    <p>Build me a chart...</p>
-
     <ul>
       <li>That is 400 pixels wide and 200 pixels tall</li>
       <li>Every circle is halfway down the SVG</li>
@@ -191,35 +112,29 @@
     
     <h3>6. A couple scales</h3>
 
-    <p><strong>You need to fix some scales for me.</strong> I will eventually have several people of various heights, and will use a rectangle to represent each of them.</p>
+    <p>Use rectangles to represent several people of various heights.</p>
     <ul>
-      <li><code>widthScale</code>: people are between 0 and 200cm tall, and I would like my longest bar to be 400 pixels</li>
-      <li><code>colorScale</code>: I would like the gender of <code>man</code> to be <code>#BDB76B</code>, <code>woman</code> to be <code>#ADFF2F</code>.</li>
+      <li><code>widthScale</code>: people are between 0 and 200cm tall, and the longest bar is 400 pixels</li>
+      <li><code>colorScale</code>: <code>Man</code> is <code>#BDB76B</code>, <code>woman</code> is <code>#ADFF2F</code>.</li>
     </ul>
-
-    <p>Update the <code>domain</code> and <code>range</code> of the <code>widthScale</code> and <code>colorScale</code>.</p>
 
     <svg height="50" width="400" id="chart6">
       <rect x="0" y="15" height="20" fill="black">
     </svg>
 
     <h3>7. Appending a fancy SVG with a margin</h3>
-
-    <p>Right now I add an SVG inside of this chart in a very simple way, but it doesn't give me <a href="https://bl.ocks.org/mbostock/3019563">the fancy margins we had at some point in life</a>.</p>
-    <p>Adapt the code from class, changing this SVG to be 400 pixels wide, 200 pixels tall, with a 50 pixel margin the rectangle inside. <em>Don't copy the code from the link above, it won't work.)</em></p>
+    <p>Chang this SVG to be 400 pixels wide, 200 pixels tall, with a 50 pixel margin the rectangle inside.</p>
 
     <div id="chart7"></div>
 
     <h3>8. A circle chart</h3>
 
-    <p>I have a few circles that I need to space out and resize. I would like...</p>
+    <p>Space out and resize a few circles. I make:</p>
     <ul>
-      <li>Every circle's <code>cy</code> to be the <strong>vertical center of the graph</strong></li>
-      <li>Each circle to be evenly spaced out on the x axis.</li>
+      <li>Every circle's <code>cy</code> at the <strong>vertical center of the graph</strong></li>
+      <li>Each circle evenly spaced out on the x axis.</li>
       <li>Each circle's size to reflect the weight of the animal. If an animal were 1000 lb, it should have a radius of 50.</li>
     </ul>
-
-    <p>Hm, this seems familiar. Can we reuse anything from last time?</p>
 
     <div id="chart8">
       <svg>
@@ -234,16 +149,12 @@
 
     <h3>9. Reading external data</h3>
 
-    <p>Run a server and open this file. If you do it correctly, the box below will turn green.</p>
-
     <div id="chart9"></div>
 
     <h3>10. Scatterplots</h3>
 
-    <p>Build me a graph...</p>
-
     <ul>
-      <li>That is 400 pixels wide and 400 pixels tall, margin is up to you</li>
+      <li>That is 400 pixels wide and 400 pixels tall.</li>
       <li><strong>Mark:</strong> circle</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual rep:</strong> x axis </li>
       <li><strong>Data:</strong> hot dogs consumed, <strong>Visual rep:</strong> y axis </li>
@@ -258,29 +169,23 @@
 
     <h3>11. Categorical scatterplot</h3>
 
-    <p>Build me a graph...</p>
-
     <ul>
-      <li>That is 400 pixels wide and 400 pixels tall, margin is up to you</li>
+      <li>That is 400 pixels wide and 400 pixels tall</li>
       <li><strong>Mark:</strong> circle</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual rep:</strong> x axis</li>
       <li><strong>Data:</strong> kind of animal, <strong>Visual rep:</strong> y axis </li>
       <li>With <a href="http://htmlcolorcodes.com/">light pink</a> circles</li>
       <li>Has axis labels</li>
-      <li>Has a little padding between the categories and the x axis label. Maybe 25% padding or so.</li>
+      <li>Has a little padding between the categories and the x axis label.</li>
     </ul>
-
-    <p>The data being read is <a href="data/eating-data.csv">data/eating-data.csv</a></p>
 
     <div id="chart11">
     </div>
 
     <h3>12. Weird colored bubble chart</h3>
 
-    <p>Build me a graph...</p>
-
     <ul>
-      <li>That is 400 pixels wide and 200 pixels tall, margin is up to you</li>
+      <li>That is 400 pixels wide and 200 pixels tall.</li>
       <li><strong>Mark:</strong> circle</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual rep:</strong> x axis </li>
       <li><strong>Data:</strong> kind of animal, <strong>Visual rep:</strong> color <em>(colors are your choice)</em></li>
@@ -289,24 +194,17 @@
       <li>Has the x axis labeled</li>
     </ul>
 
-    <p>The data being read is <a href="data/eating-data.csv">data/eating-data.csv</a></p>
-
     <div id="chart12"></div>
 
     <h3>13. Horizontal bar graph</h3>
 
-    <p>Build me a graph...</p>
-
     <ul>
-      <li>That is taller than it is wide. Margin is up to you</li>
       <li><strong>Mark:</strong> rectangles</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual rep:</strong> height </li>
       <li><strong>Data:</strong> kind of animal, <strong>Visual rep:</strong> color</li>
       <li>Has a axis labels on the y axis</li>
-      <li>Adjust your margins so I can see the full names on the left</li>
+      <li>Adjust margins to see the full names on the left</li>
     </ul>
-
-    <p><strong>!!! Read the hints for how to do the y axis !!!</strong> The data being read is <a href="data/eating-data.csv">data/eating-data.csv</a></p>
 
     <div id="chart13">
     </div>
@@ -314,18 +212,13 @@
 
     <h3>14. Vertical bar graph</h3>
 
-    <p>Build me a graph...</p>
-
     <ul>
-      <li>That is wider than it is tall. Margin is up to you</li>
       <li><strong>Mark:</strong> rectangles</li>
       <li><strong>Data:</strong> hamburgers consumed, <strong>Visual rep:</strong> height </li>
       <li><strong>Data:</strong> kind of animal, <strong>Visual rep:</strong> color</li>
       <li>Has the bars lined up at the bottom</li>
       <li>Has a axis labels on the y axis</li>
     </ul>
-
-    <p>The data being read is <a href="data/eating-data.csv">data/eating-data.csv</a></p>
 
     <div id="chart14">
     </div>
