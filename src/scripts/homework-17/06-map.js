@@ -2,16 +2,12 @@ import * as d3 from 'd3'
 import * as topojson from 'topojson'
 
 const margin = { top: 0, left: 0, right: 0, bottom: 0 }
-
 const height = 300 - margin.top - margin.bottom
 const width = 330 - margin.left - margin.right
 
 const container = d3.select('#chart-6')
-
 const projection = d3.geoAlbersUsa()
-
 const path = d3.geoPath().projection(projection)
-
 const powerplants = [
   'hydroelectric',
   'coal',
@@ -80,12 +76,9 @@ function ready([json, datapoints]) {
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
     .each(function(d) {
       const types = d.key
-      //   console.log(types)
       const outputs = d.values
-      //   console.log(d)
-
       const svg = d3.select(this)
-      // console.log(yScale(types))
+
       svg
         .selectAll('.country')
         .data(states.features)
@@ -107,10 +100,8 @@ function ready([json, datapoints]) {
         })
         .attr('transform', d => {
           const coords = projection([d.Longitude, d.Latitude])
-          // console.log(d.Longitude)
           return `translate(${coords})`
         })
-        // .attr('fill', 'white')
         .attr('data-legend', function(d) {
           return d.PrimSource
         })
@@ -122,6 +113,7 @@ function ready([json, datapoints]) {
         .text(types)
         .attr('x', width / 2)
         .attr('y', height / 2)
+        .text(types.charAt(0).toUpperCase() + types.slice(1))
         .style('font-size', 16)
         .attr('fill', 'black')
         .attr('text-anchor', 'middle')
