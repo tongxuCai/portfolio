@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "testcafe chrome ./tests/acceptance/**  --app \"npm run start\"",
-    "start": "parcel src/index.hbs --no-hmr",
+    "start": "parcel src/*.hbs --no-hmr",
     "build": "parcel build src/index.hbs --out-dir docs --public-url '.'"
   },
   "repository": {
@@ -47,6 +47,7 @@
     "@turf/turf": "^5.1.6",
     "bootstrap": "^4.3.1",
     "d3-svg-annotation": "^2.5.0",
-    "d3-tip": "^0.9.1"
+    "d3-tip": "^0.9.1",
+    "jquery": "^3.4.1"
   }
 }
