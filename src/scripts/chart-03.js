@@ -28,7 +28,7 @@ const yPositionScale = d3
   .domain([0, 500])
   .range([height, 0])
 
-const colorScale = d3.scaleOrdinal().range(['purple', 'orange', 'pink'])
+const colorScale = d3.scaleOrdinal().range(['#e41a1c', '#377eb8', '#4daf4a'])
 
 // Do you need a d3.line function for this? Maybe something similar?
 const path = d3

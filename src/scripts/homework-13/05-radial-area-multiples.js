@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 
-let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+const margin = { top: 30, left: 30, right: 30, bottom: 30 }
 
-let height = 450 - margin.top - margin.bottom
+const height = 450 - margin.top - margin.bottom
 
-let width = 1080 - margin.left - margin.right
+const width = 1080 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-5')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -14,21 +14,21 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-let outerRadius = 80
-let innerRadius = 40
+const outerRadius = 80
+const innerRadius = 40
 
-let radiusScale = d3
+const radiusScale = d3
   .scaleLinear()
   .domain([10, 90])
   .range([innerRadius, outerRadius])
 
-let xPositionScale = d3
+const xPositionScale = d3
   .scalePoint()
   .domain(['NYC', 'Tuscon', 'Lima', 'Beijing', 'Stockholm', 'Melbourne'])
   .range([0, width])
   .padding(0.35)
 
-let angleScale = d3
+const angleScale = d3
   .scalePoint()
   .domain([
     'Jan',
@@ -47,7 +47,7 @@ let angleScale = d3
   ])
   .range([0, Math.PI * 2])
 
-let line = d3
+const line = d3
   .radialArea()
   .outerRadius(function(d) {
     return radiusScale(d.high_temp)
@@ -59,17 +59,17 @@ let line = d3
     return angleScale(d.month_name)
   })
 
-let colorScale = d3
-  .scaleLinear()
-  .domain([32, 100])
-  .range(['lightblue', 'pink'])
+// const colorScale = d3
+//   .scaleLinear()
+//   .domain([32, 100])
+//   .range(['lightblue', 'pink'])
 
 d3.csv(require('/data/all-temps.csv'))
   .then(ready)
   .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  let nested = d3
+  const nested = d3
     .nest()
     .key(function(d) {
       return d.city
@@ -81,9 +81,9 @@ function ready(datapoints) {
     .text('Average Monthly Temperatures')
     .attr('x', width / 2)
     .attr('y', 20)
-    .attr('font-size', 30)
+    .attr('font-size', 20)
     .attr('text-anchor', 'middle')
-    .attr('font-weight', 'bold')
+    .attr('font-weight', 600)
 
   svg
     .append('text')
@@ -92,24 +92,25 @@ function ready(datapoints) {
     .attr('y', 42)
     .attr('font-size', 16)
     .attr('text-anchor', 'middle')
+    .attr('font-weight', 600)
 
-  let charts = svg
+  const charts = svg
     .selectAll('g')
     .data(nested)
     .enter()
     .append('g')
     .attr('transform', function(d) {
-      let xPos = xPositionScale(d.key)
+      const xPos = xPositionScale(d.key)
       return 'translate(' + xPos + ',' + height / 2 + ')'
     })
 
   charts.each(function(d) {
-    let container = d3.select(this)
+    const container = d3.select(this)
 
     d.values.push(d.values[0])
 
-    let circleBands = [20, 40, 60, 80, 100]
-    let textBands = [20, 60, 100]
+    const circleBands = [20, 40, 60, 80, 100]
+    const textBands = [20, 60, 100]
 
     container
       .selectAll('.bands')
@@ -149,13 +150,13 @@ function ready(datapoints) {
         return d + '°'
       })
       .attr('text-anchor', 'middle')
-      .attr('font-size', 8)
+      .attr('font-size', 10)
 
     container
       .append('path')
       .datum(d.values)
       .attr('d', line)
-      .attr('fill', 'indianred')
-      .attr('opacity', '0.5')
+      .attr('fill', '#fc8d62')
+      .attr('opacity', '0.8')
   })
 }

@@ -28,7 +28,15 @@ const yPositionScale = d3
 const colorScale = d3
   .scaleOrdinal()
   .domain(['Asia', 'Europe', 'Africa', 'N.America', 'S.America'])
-  .range(['#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69'])
+  .range([
+    '#b3e2cd',
+    '#fdcdac',
+    '#cbd5e8',
+    '#f4cae4',
+    '#e6f5c9',
+    '#fff2ae',
+    '#f1e2cc'
+  ])
 
 d3.csv(require('../data/countries.csv')).then(ready)
 
@@ -45,29 +53,29 @@ function ready(datapoints) {
 
   d3.select('#highlight-asia').on('click', function() {
     console.log('clicked')
-    svg.selectAll('rect').attr('fill', 'grey')
+    svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.asia')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .raise()
   })
 
   d3.select('#highlight-africa').on('click', function() {
     console.log('clicked')
-    svg.selectAll('rect').attr('fill', 'grey')
+    svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.africa')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .attr('opacity', 0.95)
       .raise()
   })
 
   d3.select('#highlight-northamerica').on('click', function() {
     console.log('clicked')
-    svg.selectAll('rect').attr('fill', 'grey')
+    svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.namerica')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .raise()
   })
 
@@ -77,9 +85,9 @@ function ready(datapoints) {
       .selectAll('rect')
       .attr('fill', function(d) {
         if (d.gdp_per_capita < '5000') {
-          return '#4cc1fc'
+          return '#8da0cb'
         } else {
-          return 'grey'
+          return 'lightgrey'
         }
       })
       .raise()
@@ -95,7 +103,7 @@ function ready(datapoints) {
 
   d3.select('#highlight-reset').on('click', function() {
     console.log('clicked')
-    svg.selectAll('rect').attr('fill', 'grey')
+    svg.selectAll('rect').attr('fill', 'lightgrey')
   })
   //   svg
   //     .selectAll('.reset')
@@ -114,7 +122,7 @@ function ready(datapoints) {
     .attr('width', d => xPositionScale.bandwidth())
     .attr('class', d => d.continent.toLowerCase().replace(/[^a-z]*/g, ''))
     .attr('height', d => height - yPositionScale(d.life_expectancy))
-    .attr('fill', 'grey')
+    .attr('fill', 'lightgrey')
 
   const yAxis = d3
     .axisLeft(yPositionScale)

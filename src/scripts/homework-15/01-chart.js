@@ -28,13 +28,13 @@ const yPositionScale = d3
 const colorScale = d3
   .scaleOrdinal()
   .range([
-    '#8dd3c7',
-    '#ffffb3',
-    '#bebada',
-    '#fb8072',
-    '#80b1d3',
-    '#fdb462',
-    '#b3de69'
+    '#b3e2cd',
+    '#fdcdac',
+    '#cbd5e8',
+    '#f4cae4',
+    '#e6f5c9',
+    '#fff2ae',
+    '#f1e2cc'
   ])
 
 d3.csv(require('/data/countries.csv')).then(ready)
@@ -115,7 +115,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.asia')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .raise()
   })
 
@@ -123,7 +123,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.africa')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .raise()
   })
 
@@ -131,7 +131,7 @@ function ready(datapoints) {
     svg.selectAll('rect').attr('fill', 'lightgrey')
     svg
       .selectAll('.namerica')
-      .attr('fill', '#4cc1fc')
+      .attr('fill', '#8da0cb')
       .raise()
   })
 
@@ -140,7 +140,7 @@ function ready(datapoints) {
       .selectAll('rect')
       .attr('fill', d => {
         if (d.gdp_per_capita < 3000) {
-          return '#4cc1fc'
+          return '#8da0cb'
         } else {
           return 'lightgrey'
         }
@@ -162,7 +162,8 @@ function ready(datapoints) {
     .text('higher GDP ⟶')
     .attr('class', 'gdp-note-high')
     .attr('text-anchor', 'middle')
-    .attr('font-size', 12)
+    .attr('font-size', 15)
+    .attr('font-weight', 600)
     .attr('x', width * 0.75)
     .attr('y', height + 15)
 
@@ -171,7 +172,8 @@ function ready(datapoints) {
     .text('⟵ lower GDP')
     .attr('class', 'gdp-note-low')
     .attr('text-anchor', 'middle')
-    .attr('font-size', 12)
+    .attr('font-size', 15)
+    .attr('font-weight', 600)
     .attr('x', width * 0.25)
     .attr('y', height + 15)
 

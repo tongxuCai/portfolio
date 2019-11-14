@@ -1,10 +1,10 @@
 import * as d3 from 'd3'
 
-let margin = { top: 0, left: 0, right: 0, bottom: 0 }
-let height = 600 - margin.top - margin.bottom
-let width = 600 - margin.left - margin.right
+const margin = { top: 0, left: 0, right: 0, bottom: 0 }
+const height = 500 - margin.top - margin.bottom
+const width = 600 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-7')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -12,7 +12,7 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-let times = [
+const times = [
   '00:00',
   '01:00',
   '02:00',
@@ -39,14 +39,16 @@ let times = [
   '23:00'
 ]
 
-const radius = 250
+const radius = 200
 
 const radiusScale = d3
   .scaleLinear()
   .domain([0, 90000])
   .range([0, radius])
 
-const blueScale = d3.scaleSequential(d3.interpolateYlGnBu).domain([45000, 20000])
+const blueScale = d3
+  .scaleSequential(d3.interpolateYlGnBu)
+  .domain([45000, 20000])
 const redScale = d3.scaleSequential(d3.interpolateYlOrBr).domain([35000, 70000])
 
 const angleScale = d3.scaleBand().range([0, Math.PI * 2])

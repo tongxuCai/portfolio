@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 
-let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+const margin = { top: 10, left: 20, right: 30, bottom: 30 }
 
-let height = 400 - margin.top - margin.bottom
+const height = 400 - margin.top - margin.bottom
 
-let width = 1080 - margin.left - margin.right
+const width = 1080 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-3c')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -14,9 +14,9 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-let radius = 90
+const radius = 90
 
-let radiusScale = d3
+const radiusScale = d3
   .scaleLinear()
   .domain([10, 90])
   .range([40, radius])
@@ -37,12 +37,12 @@ const months = [
   'Blah'
 ]
 
-let angleScale = d3
+const angleScale = d3
   .scalePoint()
   .domain(months)
   .range([0, Math.PI * 2])
 
-let arc = d3
+const arc = d3
   .arc()
   .innerRadius(function(d) {
     return radiusScale(d.data.low_temp)
@@ -51,17 +51,17 @@ let arc = d3
     return radiusScale(d.data.high_temp)
   })
 
-let pie = d3
+const pie = d3
   .pie()
   .value(1 / 12)
   .sort(null)
 
-let colorScale = d3
+const colorScale = d3
   .scaleLinear()
   .domain([32, 85])
-  .range(['lightblue', 'pink'])
+  .range(['#ffffb3', '#bebada'])
 
-let xPositionScale = d3
+const xPositionScale = d3
   .scalePoint()
   .domain(['NYC', 'Tuscon', 'Lima', 'Beijing', 'Melbourne', 'Stockholm'])
   .range([0, width])
@@ -72,20 +72,20 @@ d3.csv(require('/data/all-temps.csv'))
   .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  let nested = d3
+  const nested = d3
     .nest()
     .key(function(d) {
       return d.city
     })
     .entries(datapoints)
 
-  let charts = svg
+  const charts = svg
     .selectAll('g')
     .data(nested)
     .enter()
     .append('g')
     .attr('transform', function(d) {
-      let xPos = xPositionScale(d.key)
+      const xPos = xPositionScale(d.key)
       return 'translate(' + xPos + ',' + height / 2 + ')'
     })
 
@@ -112,8 +112,10 @@ function ready(datapoints) {
       .append('text')
       .attr('x', 0)
       .attr('y', 0)
+      .attr('font-size', 15)
       .attr('dy', radius + 40)
       .text(d.key)
       .attr('text-anchor', 'middle')
+      .attr('font-weight', 600)
   })
 }

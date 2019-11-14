@@ -1,11 +1,11 @@
 import * as d3 from 'd3'
 
-let margin = { top: 20, left: 25, right: 0, bottom: 70 }
+const margin = { top: 20, left: 25, right: 0, bottom: 70 }
 
-let height = 600 - margin.top - margin.bottom
-let width = 800 - margin.left - margin.right
+const height = 600 - margin.top - margin.bottom
+const width = 800 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-4')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -13,41 +13,41 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-var parseTime = d3.timeParse('%Y-%m-%d')
+const parseTime = d3.timeParse('%Y-%m-%d')
 
-let chartDimensions = { height: 300, width: 100 }
+const chartDimensions = { height: 300, width: 100 }
 
-var yPositionScaleMicro = d3
+const yPositionScaleMicro = d3
   .scaleLinear()
   .domain([-200, 200])
   .range([0, chartDimensions.height])
 
-var xPositionScaleMicro = d3
+const xPositionScaleMicro = d3
   .scaleLinear()
   .domain([parseTime('2004-01-01'), parseTime('2014-04-01')])
   .range([0, chartDimensions.width])
 
-var yPositionScaleMacro = d3
+const yPositionScaleMacro = d3
   .scaleLinear()
   .domain([-60, 130])
   .range([height, 0])
 
-var xPositionScaleMacro = d3
+const xPositionScaleMacro = d3
   .scaleLinear()
   .domain([20, 97])
   .range([chartDimensions.width / 2, width - chartDimensions.width / 2])
 
-var colorScale = d3
+const colorScale = d3
   .scaleThreshold()
   .domain([-15, -5, 10, 25])
-  .range(['#c94a38', '#e67950', '#b2d16d', '#7cb564', '#479050'])
+  .range(['#c51b7d', '#e9a3c9', '#fde0ef', '#e6f5d0', '#a1d76a', '#4d9221'])
 
-var line = d3
+const line = d3
   .line()
   .x(d => xPositionScaleMicro(d.date))
   .y(d => yPositionScaleMicro(d.pct_change))
 
-var wagesStore = d3.map()
+const wagesStore = d3.map()
 
 Promise.all([
   d3.csv(require('/data/ces.csv')),
@@ -58,7 +58,7 @@ Promise.all([
 
 function ready([ces, wages]) {
   wages.forEach(d => {
-    var wages = parseFloat(d['2006-03-01']) + parseFloat(d['2014-04-01'])
+    const wages = parseFloat(d['2006-03-01']) + parseFloat(d['2014-04-01'])
     wagesStore.set(d.seriesid, wages)
   })
 
@@ -75,20 +75,26 @@ function ready([ces, wages]) {
     .append('g')
     .attr('class', 'chart')
     .classed('highlight-group-1', d => {
-      var wanted = ['Electronic shopping and electronic auctions','Land subdivision','Nail salons','Book stores and news dealers', 'Other information servies']
+      const wanted = [
+        'Electronic shopping and electronic auctions',
+        'Land subdivision',
+        'Nail salons',
+        'Book stores and news dealers',
+        'Other information servies'
+      ]
       return wanted.indexOf(d.industry) !== -1
     })
     .attr('transform', d => {
-      var xTrans = xPositionScaleMacro(d.wages)
-      var yTrans = yPositionScaleMacro(d.change_since_recession)
+      const xTrans = xPositionScaleMacro(d.wages)
+      let yTrans = yPositionScaleMacro(d.change_since_recession)
       yTrans = yPositionScaleMacro(0)
       return `translate(${xTrans},${yTrans})`
     })
     .each(function(d) {
-      var group = d3.select(this)
+      const group = d3.select(this)
 
-      let dataColumns = Object.keys(d).filter(d => d[0] === '2')
-      let datapoints = dataColumns.map(colName => {
+      const dataColumns = Object.keys(d).filter(d => d[0] === '2')
+      const datapoints = dataColumns.map(colName => {
         return {
           name: colName,
           date: parseTime(colName),
@@ -96,34 +102,39 @@ function ready([ces, wages]) {
         }
       })
       // Find out the percent change from the last one
-      var first = datapoints[0]
+      const first = datapoints[0]
       datapoints.forEach(d => {
         d.pct_change = ((first.jobs - d.jobs) / first.jobs) * 100
       })
 
-      var median = d3.median(datapoints, d => d.pct_change)
-      var centerGroup = group.append('g').attr('transform', () => {
-        var x = chartDimensions.width / 2
-        var y = yPositionScaleMicro(median)
+      const median = d3.median(datapoints, d => d.pct_change)
+      const centerGroup = group.append('g').attr('transform', () => {
+        const x = chartDimensions.width / 2
+        const y = yPositionScaleMicro(median)
         return `translate(-${x},-${y})`
       })
 
-      group.append('text')
+      group
+        .append('text')
         .text(d.industry)
         .attr('text-anchor', 'middle')
         .attr('baseline-alignment', 'middle')
         .attr('class', 'highlight-text')
         .attr('font-size', 12)
         .attr('visibility', 'hidden')
-        .style('text-shadow', '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff')
+        .style(
+          'text-shadow',
+          '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'
+        )
 
       centerGroup
         .append('path')
         .datum(datapoints)
         .attr('d', line)
         .attr('fill', 'none')
-        .attr('stroke-width', 2)
+        .attr('stroke-width', 1.5)
         .attr('stroke', colorScale(d.change_since_recession))
+        .attr('opacity', 0.6)
     })
     .on('mouseout', function(d) {
       d3.select(this)
@@ -221,39 +232,48 @@ function ready([ces, wages]) {
     .attr('dx', 140)
 
   d3.select('#step-centered').on('stepin', () => {
-    svg.selectAll('.chart').transition().attr('transform', d => {
-      var xTrans = xPositionScaleMacro(d.wages)
-      var yTrans = yPositionScaleMacro(0)
-      return `translate(${xTrans},${yTrans})`
-    })
+    svg
+      .selectAll('.chart')
+      .transition()
+      .attr('transform', d => {
+        const xTrans = xPositionScaleMacro(d.wages)
+        const yTrans = yPositionScaleMacro(0)
+        return `translate(${xTrans},${yTrans})`
+      })
   })
 
   d3.select('#step-jobs').on('stepin', () => {
     svg.selectAll('.chart .highlight-text').attr('visibility', 'hidden')
     svg.selectAll('.chart').attr('opacity', 1)
 
-    svg.selectAll('.chart').transition().attr('transform', d => {
-      var xTrans = xPositionScaleMacro(d.wages)
-      var yTrans = yPositionScaleMacro(d.change_since_recession)
-      return `translate(${xTrans},${yTrans})`
-    })
+    svg
+      .selectAll('.chart')
+      .transition()
+      .attr('transform', d => {
+        const xTrans = xPositionScaleMacro(d.wages)
+        const yTrans = yPositionScaleMacro(d.change_since_recession)
+        return `translate(${xTrans},${yTrans})`
+      })
   })
 
   d3.select('#step-highlight').on('stepin', () => {
     svg.selectAll('.chart').attr('opacity', 0.25)
     svg.selectAll('.chart.highlight-group-1 text').attr('visibility', 'visible')
-    svg.selectAll('.chart.highlight-group-1').attr('opacity', 1).raise()
+    svg
+      .selectAll('.chart.highlight-group-1')
+      .attr('opacity', 1)
+      .raise()
   })
 
-  function render () {
+  function render() {
     // Calculate height/width
-    let screenWidth = svg.node().parentNode.parentNode.offsetWidth
-    let screenHeight = window.innerHeight
-    let newWidth = screenWidth - margin.left - margin.right
-    let newHeight = screenHeight - margin.top - margin.bottom
+    const screenWidth = svg.node().parentNode.parentNode.offsetWidth
+    const screenHeight = window.innerHeight
+    const newWidth = screenWidth - margin.left - margin.right
+    const newHeight = screenHeight - margin.top - margin.bottom
 
     // Update your SVG
-    let actualSvg = d3.select(svg.node().parentNode)
+    const actualSvg = d3.select(svg.node().parentNode)
     actualSvg
       .attr('height', newHeight + margin.top + margin.bottom)
       .attr('width', newWidth + margin.left + margin.right)
@@ -262,27 +282,34 @@ function ready([ces, wages]) {
     yPositionScaleMicro.range([0, chartDimensions.height])
     xPositionScaleMicro.range([0, chartDimensions.width])
     yPositionScaleMacro.range([newHeight, 0])
-    xPositionScaleMacro.range([chartDimensions.width / 2, newWidth - chartDimensions.width / 2])
+    xPositionScaleMacro.range([
+      chartDimensions.width / 2,
+      newWidth - chartDimensions.width / 2
+    ])
 
     // Reposition/redraw your elements
-    svg.selectAll('.chart')
+    svg
+      .selectAll('.chart')
       .transition()
       .attr('transform', d => {
-        var xTrans = xPositionScaleMacro(d.wages)
-        var yTrans = yPositionScaleMacro(d.change_since_recession)
+        const xTrans = xPositionScaleMacro(d.wages)
+        let yTrans = yPositionScaleMacro(d.change_since_recession)
         yTrans = yPositionScaleMacro(0)
         return `translate(${xTrans},${yTrans})`
       })
 
-    svg.selectAll('.bottom-text')
+    svg
+      .selectAll('.bottom-text')
       .transition()
-        .attr('transform', `translate(${newWidth / 2},${newHeight})`)
+      .attr('transform', `translate(${newWidth / 2},${newHeight})`)
 
-    svg.selectAll('.left-text')
+    svg
+      .selectAll('.left-text')
       .transition()
       .attr('transform', `translate(0,${yPositionScaleMacro(0)}) rotate(-90)`)
 
-    svg.selectAll('.middle-line')
+    svg
+      .selectAll('.middle-line')
       .transition()
       .attr('x1', 0)
       .attr('y1', yPositionScaleMacro(0))
@@ -294,5 +321,4 @@ function ready([ces, wages]) {
 
   window.addEventListener('resize', render)
   render()
-
 }

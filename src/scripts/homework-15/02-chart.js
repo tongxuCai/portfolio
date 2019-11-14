@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 
-let margin = { top: 100, left: 50, right: 150, bottom: 30 }
+const margin = { top: 100, left: 50, right: 150, bottom: 30 }
 
-let height = 700 - margin.top - margin.bottom
+const height = 700 - margin.top - margin.bottom
 
-let width = 600 - margin.left - margin.right
+const width = 600 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-2')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -15,13 +15,13 @@ let svg = d3
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
 // Create a time parser (see hints)
-let parseTime = d3.timeParse('%B-%y')
+const parseTime = d3.timeParse('%B-%y')
 
 // Create your scales
-let xPositionScale = d3.scaleLinear().range([0, width])
-let yPositionScale = d3.scaleLinear().range([height, 0])
+const xPositionScale = d3.scaleLinear().range([0, width])
+const yPositionScale = d3.scaleLinear().range([height, 0])
 
-let colorScale = d3
+const colorScale = d3
   .scaleOrdinal()
   .range([
     '#8dd3c7',
@@ -37,7 +37,7 @@ let colorScale = d3
   ])
 
 // Create a d3.line function that uses your scales
-let line = d3
+const line = d3
   .line()
   .x(function(d) {
     return xPositionScale(d.datetime)
@@ -56,13 +56,13 @@ function ready(datapoints) {
   datapoints.forEach(d => {
     d.datetime = parseTime(d.month)
   })
-  let dates = datapoints.map(d => d.datetime)
-  let prices = datapoints.map(d => +d.price)
+  const dates = datapoints.map(d => d.datetime)
+  const prices = datapoints.map(d => +d.price)
 
   xPositionScale.domain(d3.extent(dates))
   yPositionScale.domain(d3.extent(prices))
 
-  let nested = d3
+  const nested = d3
     .nest()
     .key(function(d) {
       return d.region
@@ -77,10 +77,15 @@ function ready(datapoints) {
     .append('path')
     .attr('class', 'region-line')
     .classed('highlight-usa', d => {
-      return d.key === "U.S."
+      return d.key === 'U.S.'
     })
     .classed('region-highlight-step', d => {
-      var regions = ['Mountain', 'Pacific', 'West South Central', 'South Atlantic']
+      let regions = [
+        'Mountain',
+        'Pacific',
+        'West South Central',
+        'South Atlantic'
+      ]
       return regions.indexOf(d.key) !== -1
     })
     .attr('d', function(d) {
@@ -100,10 +105,15 @@ function ready(datapoints) {
     .append('circle')
     .attr('class', 'region-circle')
     .classed('highlight-usa', d => {
-      return d.key == "U.S."
+      return d.key == 'U.S.'
     })
     .classed('region-highlight-step', d => {
-      var regions = ['Mountain', 'Pacific', 'West South Central', 'South Atlantic']
+      let regions = [
+        'Mountain',
+        'Pacific',
+        'West South Central',
+        'South Atlantic'
+      ]
       return regions.indexOf(d.key) !== -1
     })
     .attr('fill', function(d) {
@@ -125,10 +135,15 @@ function ready(datapoints) {
     .append('text')
     .attr('class', 'region-text')
     .classed('highlight-usa', d => {
-      return d.key == "U.S."
+      return d.key == 'U.S.'
     })
     .classed('region-highlight-step', d => {
-      var regions = ['Mountain', 'Pacific', 'West South Central', 'South Atlantic']
+      let regions = [
+        'Mountain',
+        'Pacific',
+        'West South Central',
+        'South Atlantic'
+      ]
       return regions.indexOf(d.key) !== -1
     })
     .attr('y', function(d) {
@@ -155,7 +170,7 @@ function ready(datapoints) {
     .attr('y', -40)
     .attr('dx', 40)
 
-  let rectWidth =
+  const rectWidth =
     xPositionScale(parseTime('February-17')) -
     xPositionScale(parseTime('November-16'))
 
@@ -171,7 +186,7 @@ function ready(datapoints) {
     .attr('visibility', 'hidden')
 
   // Add your axes
-  let xAxis = d3
+  const xAxis = d3
     .axisBottom(xPositionScale)
     .tickFormat(d3.timeFormat('%b %y'))
     .ticks(9)
@@ -181,24 +196,18 @@ function ready(datapoints) {
     .attr('transform', 'translate(0,' + height + ')')
     .call(xAxis)
 
-  let yAxis = d3.axisLeft(yPositionScale)
+  const yAxis = d3.axisLeft(yPositionScale)
   svg
     .append('g')
     .attr('class', 'axis y-axis')
     .call(yAxis)
 
   d3.select('#winter-draw-lines').on('stepin', () => {
-    svg
-      .selectAll('.region-line')
-      .attr('visibility', 'visible')
+    svg.selectAll('.region-line').attr('visibility', 'visible')
 
-    svg
-      .selectAll('.region-circle')
-      .attr('visibility', 'visible')
+    svg.selectAll('.region-circle').attr('visibility', 'visible')
 
-    svg
-      .selectAll('.region-text')
-      .attr('visibility', 'visible')
+    svg.selectAll('.region-text').attr('visibility', 'visible')
   })
 
   d3.select('#winter-highlight-us').on('stepin', () => {
@@ -206,9 +215,16 @@ function ready(datapoints) {
     svg.selectAll('.region-circle').attr('fill', 'lightgrey')
     svg.selectAll('.region-text').attr('fill', 'lightgrey')
 
-    svg.selectAll('path.highlight-usa').attr('stroke', 'red').raise()
-    svg.selectAll('circle.highlight-usa').attr('fill', 'red').raise()
-    svg.selectAll('text.highlight-usa')
+    svg
+      .selectAll('path.highlight-usa')
+      .attr('stroke', 'red')
+      .raise()
+    svg
+      .selectAll('circle.highlight-usa')
+      .attr('fill', 'red')
+      .raise()
+    svg
+      .selectAll('text.highlight-usa')
       .attr('fill', 'red')
       .attr('font-weight', 'bold')
       .raise()
@@ -216,26 +232,33 @@ function ready(datapoints) {
 
   d3.select('#winter-highlight-regions').on('stepin', () => {
     svg.select('.winter-rect').style('visibility', 'hidden')
-    svg.selectAll('path.region-highlight-step').attr('stroke', 'lightblue').raise()
-    svg.selectAll('circle.region-highlight-step').attr('fill', 'lightblue').raise()
-    svg.selectAll('text.region-highlight-step')
+    svg
+      .selectAll('path.region-highlight-step')
+      .attr('stroke', 'lightblue')
+      .raise()
+    svg
+      .selectAll('circle.region-highlight-step')
       .attr('fill', 'lightblue')
-      .raise()    
+      .raise()
+    svg
+      .selectAll('text.region-highlight-step')
+      .attr('fill', 'lightblue')
+      .raise()
   })
 
   d3.select('#winter-draw-winter').on('stepin', () => {
     svg.select('.winter-rect').style('visibility', 'visible')
   })
 
-    function render() {
+  function render() {
     // Calculate height/width
-    let screenWidth = svg.node().parentNode.parentNode.offsetWidth
-    let screenHeight = window.innerHeight
-    let newWidth = screenWidth - margin.left - margin.right
-    let newHeight = screenHeight - margin.top - margin.bottom
+    const screenWidth = svg.node().parentNode.parentNode.offsetWidth
+    const screenHeight = window.innerHeight
+    const newWidth = screenWidth - margin.left - margin.right
+    const newHeight = screenHeight - margin.top - margin.bottom
 
     // Update your SVG
-    let actualSvg = d3.select(svg.node().parentNode)
+    const actualSvg = d3.select(svg.node().parentNode)
     actualSvg
       .attr('height', newHeight + margin.top + margin.bottom)
       .attr('width', newWidth + margin.left + margin.right)
@@ -245,12 +268,12 @@ function ready(datapoints) {
     yPositionScale.range([newHeight, 0])
 
     // Reposition/redraw your elements
-    svg.selectAll('.region-line')
-      .attr('d', function(d) {
-        return line(d.values)
-      })
+    svg.selectAll('.region-line').attr('d', function(d) {
+      return line(d.values)
+    })
 
-    svg.selectAll('.region-circle')
+    svg
+      .selectAll('.region-circle')
       .attr('cy', function(d) {
         return yPositionScale(d.values[0].price)
       })
@@ -258,7 +281,8 @@ function ready(datapoints) {
         return xPositionScale(d.values[0].datetime)
       })
 
-    svg.selectAll('.region-text')
+    svg
+      .selectAll('.region-text')
       .attr('y', function(d) {
         return yPositionScale(d.values[0].price)
       })
@@ -266,21 +290,20 @@ function ready(datapoints) {
         return xPositionScale(d.values[0].datetime)
       })
 
-    svg.select('.title')
-      .attr('x', newWidth / 2)
+    svg.select('.title').attr('x', newWidth / 2)
 
-    let rectWidth =
+    const rectWidth =
       xPositionScale(parseTime('February-17')) -
       xPositionScale(parseTime('November-16'))
 
-    svg.select('.winter-rect')
+    svg
+      .select('.winter-rect')
       .attr('x', xPositionScale(parseTime('December-16')))
       .attr('width', rectWidth)
       .attr('height', newHeight)
 
     // Update axes if necessary
-    svg.select('.x-axis')
-      .attr('transform', 'translate(0,' + newHeight + ')')
+    svg.select('.x-axis').attr('transform', 'translate(0,' + newHeight + ')')
 
     svg.select('.x-axis').call(xAxis)
     svg.select('.y-axis').call(yAxis)

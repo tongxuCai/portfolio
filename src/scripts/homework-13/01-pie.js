@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 
-let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+const margin = { top: 30, left: 30, right: 30, bottom: 30 }
 
-let height = 400 - margin.top - margin.bottom
+const height = 400 - margin.top - margin.bottom
 
-let width = 780 - margin.left - margin.right
+const width = 780 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-1')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -14,19 +14,19 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-let colorScale = d3.scaleOrdinal().range(['#7fc97f', '#beaed4', '#fdc086'])
+const colorScale = d3.scaleOrdinal().range(['#fbb4ae', '#b3cde3', '#ccebc5'])
 
-let arc = d3
+const arc = d3
   .arc()
   .innerRadius(0)
   .outerRadius(150)
 
-let labelArc = d3
+const labelArc = d3
   .arc()
   .innerRadius(160)
   .outerRadius(160)
 
-let pie = d3.pie().value(function(d) {
+const pie = d3.pie().value(function(d) {
   return d.minutes
 })
 
@@ -35,7 +35,7 @@ d3.csv(require('/data/time-breakdown.csv'))
   .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  let pieContainer = svg
+  const pieContainer = svg
     .append('g')
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 

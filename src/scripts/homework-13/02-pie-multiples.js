@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 
-let margin = { top: 30, left: 30, right: 30, bottom: 30 }
+const margin = { top: 30, left: 30, right: 30, bottom: 30 }
 
-let height = 400 - margin.top - margin.bottom
+const height = 400 - margin.top - margin.bottom
 
-let width = 780 - margin.left - margin.right
+const width = 780 - margin.left - margin.right
 
-let svg = d3
+const svg = d3
   .select('#chart-2')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
@@ -14,19 +14,19 @@ let svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-let colorScale = d3.scaleOrdinal().range(['#7fc97f', '#beaed4', '#fdc086'])
-let xPositionScale = d3
+const colorScale = d3.scaleOrdinal().range(['#fbb4ae', '#b3cde3', '#ccebc5'])
+const xPositionScale = d3
   .scalePoint()
   .domain(['Project 1', 'Project 2', 'Project 3', 'Project 4'])
   .range([0, width])
   .padding(0.4)
 
-let arc = d3
+const arc = d3
   .arc()
   .innerRadius(0)
   .outerRadius(80)
 
-let pie = d3
+const pie = d3
   .pie()
   .value(function(d) {
     return d.minutes
@@ -40,20 +40,20 @@ d3.csv(require('/data/time-breakdown-all.csv'))
   .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  let nested = d3
+  const nested = d3
     .nest()
     .key(function(d) {
       return d.project
     })
     .entries(datapoints)
 
-  let charts = svg
+  const charts = svg
     .selectAll('g')
     .data(nested)
     .enter()
     .append('g')
     .attr('transform', function(d) {
-      let xPos = xPositionScale(d.key)
+      const xPos = xPositionScale(d.key)
       return 'translate(' + xPos + ',' + height / 2 + ')'
     })
 

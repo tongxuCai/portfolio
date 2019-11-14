@@ -48,11 +48,11 @@ const colorScale = d3
     'Wyoming'
   ])
   .range([
-    '#4cc1fc',
-    '#4cc1fc',
-    '#4cc1fc',
-    '#4cc1fc',
-    '#4cc1fc',
+    '#4daf4a',
+    '#4daf4a',
+    '#4daf4a',
+    '#4daf4a',
+    '#4daf4a',
     '#333333',
     '#333333',
     '#333333',

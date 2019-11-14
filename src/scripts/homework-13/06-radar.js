@@ -20,9 +20,9 @@ const radiusScale = d3
   .domain([0, 5])
   .range([0, radius])
 
-let angleScale = d3.scaleBand().range([0, Math.PI * 2])
+const angleScale = d3.scaleBand().range([0, Math.PI * 2])
 
-let line = d3
+const line = d3
   .radialLine()
   .radius(d => radiusScale(d.score))
   .angle(d => angleScale(d.category))
@@ -61,8 +61,8 @@ function ready(datapoints) {
     .enter()
     .append('text')
     .text(d => d)
-    .attr('font-size', 10)
-    .attr('font-weight', 'bold')
+    .attr('font-size', 15)
+    .attr('font-weight', 600)
     .attr('text-anchor', 'middle')
     .attr('alignment-baseline', 'middle')
     .attr('x', 0)
@@ -90,7 +90,7 @@ function ready(datapoints) {
     })
 
   // We want to go from 0 to 1, in steps of 0.2
-  let bands = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+  const bands = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
 
   // var masked = holder
   //   .append('g')
@@ -112,7 +112,7 @@ function ready(datapoints) {
     .append('path')
     .datum(datapoints)
     .attr('d', line)
-    .attr('fill', 'pink')
-    .attr('opacity', 0.5)
+    .attr('fill', '#fc8d62')
+    .attr('opacity', 0.8)
     .attr('stroke', 'black')
 }

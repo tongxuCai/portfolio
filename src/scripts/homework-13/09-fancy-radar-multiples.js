@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 const margin = { top: 0, left: 0, right: 0, bottom: 0 }
 
-const height = 410 - margin.top - margin.bottom
+const height = 500 - margin.top - margin.bottom
 const width = 350 - margin.left - margin.right
 
 const container = d3.select('#chart-9')
@@ -95,6 +95,7 @@ function ready(datapoints) {
           }
         })
         .lower()
+        .attr('opacity', 0.5)
 
       holder
         .append('g')
@@ -105,6 +106,13 @@ function ready(datapoints) {
         .enter()
         .append('circle')
         .attr('r', d => radiusScale(d))
+        .attr('fill', (d, i) => {
+          if (i % 2 === 0) {
+            return '#ffffb3'
+          } else {
+            return '#bebada'
+          }
+        })
         .lower()
 
       holder
@@ -113,7 +121,7 @@ function ready(datapoints) {
         .enter()
         .append('text')
         .attr('text-anchor', 'middle')
-        .attr('font-size', 12)
+        .attr('font-size', 10)
         .attr('font-weight', 'bold')
         .text(d => d)
         .attr('x', 0)

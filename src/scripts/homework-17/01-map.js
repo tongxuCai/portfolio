@@ -36,13 +36,13 @@ const graticule = d3.geoGraticule()
 const colorScale = d3
   .scaleOrdinal()
   .range([
-    '#762a83',
-    '#af8dc3',
-    '#e7d4e8',
-    '#f7f7f7',
-    '#d9f0d3',
-    '#7fbf7b',
-    '#1b7837'
+    '#1b9e77',
+    '#d95f02',
+    '#7570b3',
+    '#e7298a',
+    '#66a61e',
+    '#e6ab02',
+    '#a6761d'
   ])
 
 Promise.all([

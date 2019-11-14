@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
 
-const margin = { top: 50, left: 0, right: 0, bottom: 0 }
-const height = 430 - margin.top - margin.bottom
-const width = 400 - margin.left - margin.right
+const margin = { top: 50, left: 0, right: 0, bottom: 30 }
+const height = 600 - margin.top - margin.bottom
+const width = 500 - margin.left - margin.right
 
 const svg = d3
   .select('#chart-8')
@@ -14,7 +14,7 @@ const svg = d3
 
 const angleScale = d3.scaleBand().range([0, Math.PI * 2])
 
-const radius = 150
+const radius = 160
 
 const radiusScale = d3
   .scaleLinear()
@@ -62,7 +62,7 @@ function ready(datapoints) {
   const categories = customDatapoints.map(d => d.name)
   angleScale.domain(categories)
 
-  let bands = [0.2, 0.4, 0.6, 0.8, 1]
+  const bands = [0.2, 0.4, 0.6, 0.8, 1]
 
   holder
     .selectAll('.band-circle')
@@ -78,6 +78,7 @@ function ready(datapoints) {
       }
     })
     .lower()
+    .attr('opacity', 0.5)
 
   holder
     .append('g')
@@ -89,9 +90,9 @@ function ready(datapoints) {
     .attr('r', d => radiusScale(d))
     .attr('fill', (d, i) => {
       if (i % 2 === 0) {
-        return '#FFB81C'
+        return '#ffffb3'
       } else {
-        return '#c94435'
+        return '#bebada'
       }
     })
     .lower()
@@ -111,7 +112,7 @@ function ready(datapoints) {
       return `rotate(${degrees})`
     })
     .attr('font-weight', 'bold')
-    .attr('font-size', 12)
+    .attr('font-size', 13)
 
   holder
     .append('mask')
@@ -146,7 +147,7 @@ function ready(datapoints) {
     .append('text')
     .attr('y', d => -radiusScale(d))
     .attr('text-anchor', 'middle')
-    .attr('font-size', 12)
+    .attr('font-size', 15)
     .attr('alignment-baseline', 'middle')
     .text(d => d * maxPoints)
     .attr('transform', d => {

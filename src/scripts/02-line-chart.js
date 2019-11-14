@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
 
-const margin = { top: 40, left: 50, right: 50, bottom: 40 }
+const margin = { top: 50, left: 50, right: 50, bottom: 40 }
 
-const height = 300 - margin.top - margin.bottom
+const height = 400 - margin.top - margin.bottom
 
 const width = 600 - margin.left - margin.right
 
@@ -55,8 +55,8 @@ function ready(datapoints) {
     .append('path')
     .datum(datapoints)
     .attr('d', line)
-    .attr('stroke', '#4cc1fc')
-    .attr('stroke-width', 2)
+    .attr('stroke', '#bebada')
+    .attr('stroke-width', 1.5)
     .attr('fill', 'none')
 
   svg
@@ -65,7 +65,7 @@ function ready(datapoints) {
     .attr('x', width / 2)
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .attr('font-size', 22)
+    .attr('font-size', 20)
     .attr('font-weight', 'bold')
 
   svg
@@ -76,7 +76,7 @@ function ready(datapoints) {
     .attr('r', 3)
     .attr('cx', d => xPositionScale(d.datetime))
     .attr('cy', d => yPositionScale(d.Close))
-    .attr('fill', '#4cc1fc')
+    .attr('fill', '#bebada')
     .on('mouseover', function(d) {
       // Select the element by class, use .text to set the content
       d3.select('.infobox .Date').text(d.Date)
